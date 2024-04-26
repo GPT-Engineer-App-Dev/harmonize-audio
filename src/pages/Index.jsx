@@ -41,7 +41,7 @@ const Index = () => {
         Upload Track
         <input type="file" hidden accept="audio/*" onChange={uploadFileHandler} />
       </Button>
-    </VStack>
+    </HStack>
   );
 };
 
