@@ -28,7 +28,7 @@ const Index = () => {
   return (
     <VStack spacing={8} p={5} align="center" bg={useColorModeValue('gray.50', 'gray.800')}>
       <Text fontSize="2xl" fontWeight="bold">Welcome to GPT Engineer Music Player</Text>
-      <Image src="https://via.placeholder.com/400" alt="Band Image" boxSize="300px" />
+      <Image src="/images/album-cover.jpg" alt="Example Album Cover" boxSize="300px" />
       <audio ref={audioRef} onEnded={() => setIsPlaying(false)}>
         <source src="" type="audio/mpeg" />
         Your browser does not support the audio element.
