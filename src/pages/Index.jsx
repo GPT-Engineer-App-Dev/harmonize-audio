@@ -1,15 +1,47 @@
-// Complete the Index page component here
-// Use chakra-ui
-import { Button } from "@chakra-ui/react"; // example
-import { FaPlus } from "react-icons/fa"; // example - use react-icons/fa for icons
+import { Box, Button, VStack, Text, Image, useColorModeValue } from '@chakra-ui/react';
+import { FaPlay, FaPause, FaUpload } from 'react-icons/fa';
+import React, { useState, useRef } from 'react';
 
 const Index = () => {
-  // TODO: Create the website here!
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
+
+  const togglePlayPause = () => {
+    const prevValue = isPlaying;
+    setIsPlaying(!prevValue);
+    if (!prevValue) {
+      audioRef.current.play();
+    } else {
+      audioRef.current.pause();
+    }
+  };
+
+  const uploadFileHandler = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      audioRef.current.src = URL.createObjectURL(file);
+      audioRef.current.load();
+      setIsPlaying(false);
+    }
+  };
+
   return (
-    <Button>
-      Hello world! <FaPlus />
-    </Button>
-  ); // example
+    <VStack spacing={8} p={5} align="center" bg={useColorModeValue('gray.50', 'gray.800')}>
+      <Text fontSize="2xl" fontWeight="bold">Welcome to GPT Engineer Music Player</Text>
+      <Image src="https://via.placeholder.com/400" alt="Band Image" boxSize="300px" />
+      <audio ref={audioRef} onEnded={() => setIsPlaying(false)}>
+        <source src="" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+      <Button leftIcon={isPlaying ? <FaPause /> : <FaPlay />} onClick={togglePlayPause}>
+        {isPlaying ? 'Pause' : 'Play'}
+      </Button>
+      <Button leftIcon={<FaUpload />} as="label">
+        Upload Track
+        <input type="file" hidden accept="audio/*" onChange={uploadFileHandler} />
+      </Button>
+    </VStack>
+  );
 };
 
 export default Index;
